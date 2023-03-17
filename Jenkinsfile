@@ -21,9 +21,4 @@ node{
         sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.10.236:/opt/tomcat8/webapps"
         }
     }
-    stage('Change Permissions'){
-        sshagent(['827e0e51-62d7-46ea-b421-0d2fc6a33410']) {
-        sh "chmod 777 /opt/tomcat8/webapps/maven-web-application.war"
-		}
-    }
 }
