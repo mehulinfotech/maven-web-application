@@ -5,7 +5,10 @@ node{
         git branch: 'development', credentialsId: '118884bc-0be5-4a45-a8fd-ff329c1d747a', url: 'https://github.com/mehulinfotech/maven-web-application.git'
     }
     stage('Build Package'){
-        sh "${mavenHome}/bin/mvn clean package"
+        sh "chmod 777 target/maven-web-application.war"
+    }
+    stage('Give full permissions'){
+        sh "${mavenHome}/bin/mvn sonar:sonar"
     }
     stage('Generate SonarQube Report'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
