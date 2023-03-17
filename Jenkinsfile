@@ -8,8 +8,8 @@ node{
         sh "${mavenHome}/bin/mvn clean package"
     }
     stage('Change group and owner and Permissions'){
-        sh "chown -R ec2-user:ec2-user /var/lib/jenkins/"
-		sh "chmod -R 777 /target/maven-web-application.war"
+        sh "sudo chown -R ec2-user:ec2-user /var/lib/jenkins/"
+		sh "sudo chmod -R 777 /target/maven-web-application.war"
 	}
     stage('Generate SonarQube Report'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
