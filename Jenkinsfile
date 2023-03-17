@@ -7,9 +7,6 @@ node{
     stage('Build Package'){
         sh "chmod 777 target/maven-web-application.war"
     }
-    stage('Give full permissions'){
-        sh "${mavenHome}/bin/mvn sonar:sonar"
-    }
     stage('Generate SonarQube Report'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
     }
