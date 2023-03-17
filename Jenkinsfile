@@ -7,9 +7,9 @@ node{
     stage('Build Package'){
         sh "${mavenHome}/bin/mvn clean package"
     }
-    stage('Change Permissions'){
+    /*stage('Change Permissions'){
 	sh "chmod 777 target/maven-web-application.war"
-    }
+    }*/
     stage('Generate SonarQube Report'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
     }
