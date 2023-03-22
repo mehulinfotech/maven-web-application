@@ -16,7 +16,7 @@ node{
         sh "${mavenHome}/bin/mvn sonar:sonar"
     }
     stage('Store to Nexus Repo'){
-        sh "${mavenHome}/bin/mvn deploy"
+        sh "${mavenHoe}/bin/mvn deploy"
     }
    /* stage('Deploy to Tomcat Server'){
         sshagent(['827e0e51-62d7-46ea-b421-0d2fc6a33410']) {
