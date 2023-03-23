@@ -101,7 +101,7 @@ pipeline {
 		stage('Deploy to Tomcat Server'){
 			steps{
 			    echo "Deploying..."
-			    deploy adapters: [tomcat8(credentialsId: '1166e0e8-fba2-4c4a-a6d7-bd3003271f0c', path: '', url: 'http://3.110.168.235:8080/')], contextPath: 'maven-web-application/', war: '**/*.war'
+			    deploy adapters: [tomcat8(credentialsId: '1166e0e8-fba2-4c4a-a6d7-bd3003271f0c', path: '', url: 'http://3.110.168.235:8080/')], contextPath: 'maven-web-application', war: '**/*.war'
 			}
 	    	}
 	}
