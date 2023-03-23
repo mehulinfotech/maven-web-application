@@ -69,9 +69,12 @@ pipeline {
 	tools {
 		maven 'maven 3.8.6'
 	}
+	echo "The Build Number is: ${env.BUILD_NUMBER}"
+	echo "The name of the node is: ${env.NODE_NAME}"
 	stages {
 		stage('Code Checkout'){
 			steps{
+				sendSlackNotifications('STARTED')
 				echo "Pull Code from Github Repo"
 				git branch: 'development', credentialsId: '0246e966-4285-404a-a335-ec5979b280da', url: 'https://github.com/mehulinfotech/maven-web-application.git'
 			}
@@ -105,4 +108,9 @@ pipeline {
 			}
 	    	}
 	}
+		post{ //post section
+		    always{
+			sendSlackNotifications(currentBuild.result)
+	    		}
+		}
 }
