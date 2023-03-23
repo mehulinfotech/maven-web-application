@@ -63,7 +63,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 */
 
 /*Declarative Pipeline Start*/
-@library('SlackNotifLibs') _
+@Library('SlackNotifLibs') _
 pipeline {
 	agent any
 	stages {
