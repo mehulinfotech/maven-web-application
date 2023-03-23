@@ -1,3 +1,5 @@
+/*
+--Scripted Pipeline Start--
 node{
     try {
     notifyBuild('STARTED')
@@ -8,22 +10,22 @@ node{
     }
     stage('Build Package'){
         sh "${mavenHome}/bin/mvn clean package"
-    }
+    }*/
     /*stage('Change Permissions'){
 	sh "chmod 777 target/maven-web-application.war"
-    }*/
+    }*//*
     stage('Generate SonarQube Report'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
     }
     stage('Store to Nexus Repo'){
         sh "${mavenHome}/bin/mvn deploy"
-    }
+    //}*/
     /*stage('Deploy to Tomcat Server'){
         sshagent(['827e0e51-62d7-46ea-b421-0d2fc6a33410']) {
         sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.10.236:/opt/tomcat8/webapps"
         }
     }*/
-   }
+   }/*
 	catch (e) {
 		currentBuild.result = "FAILED"
 		throw e}
@@ -55,4 +57,47 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   slackSend (color: colorCode, message: summary)
+}
+--Scripted Pipeline End--
+*/
+
+/*Declarative Pipeline Start*/
+pipeline {
+	agent any
+	stages {
+		stage('Code Checkout'){
+			steps{
+				echo "Pull Code from Github Repo"
+				git branch: 'development', credentialsId: '0246e966-4285-404a-a335-ec5979b280da', url: 'https://github.com/mehulinfotech/maven-web-application.git'
+			}
+		}
+		
+		stage('Build using Maven'){
+			steps{
+				echo "Build using Maven"
+				sh 'mvn clean package'
+			}
+		}
+		
+		stage('Create SonarQube report'){
+			steps{
+				echo "Create SonarQube report"
+				sh 'mvn sonar:sonar'
+			}
+		}
+		
+		stage('Push to Artifact Repo'){
+			steps{
+				echo "Store to Nexus"
+				sh 'mvn deploy'
+			}
+		}
+		
+		stage('Deploy to Tomcat Server'){
+			steps{
+			    echo "Deploying..."
+			    deploy adapters: [tomcat8(credentialsId: '1166e0e8-fba2-4c4a-a6d7-bd3003271f0c', path: '', url: 'http://3.110.168.235:8080/')], contextPath: 'maven-web-application/', war: '**/*.war'
+			}
+	    	}
+	}
 }
