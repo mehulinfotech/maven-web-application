@@ -66,6 +66,9 @@ def notifyBuild(String buildStatus = 'STARTED') {
 @Library('SlackNotifLibs') _
 pipeline {
 	agent any
+	tools {
+		maven 'maven 3.8.6'
+	}
 	stages {
 		stage('Code Checkout'){
 			steps{
